@@ -23,6 +23,15 @@ class _MainPagesState extends State<MainPages> {
         onPressed: () {},
         backgroundColor: Colors.blue,
         isExtended: true,
+        shape: const RoundedRectangleBorder(
+          // <= Change BeveledRectangleBorder to RoundedRectangularBorder
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(10.0),
+            bottomLeft: Radius.circular(30.0),
+            bottomRight: Radius.circular(30.0),
+          ),
+        ),
         child: const Icon(
           Icons.add,
           color: Colors.white,
@@ -30,7 +39,7 @@ class _MainPagesState extends State<MainPages> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        color: Colors.pink,
+        color: Colors.green,
         // this creates a notch in the center of the bottom bar
         shape: const CircularNotchedRectangle(),
         notchMargin: 6,
