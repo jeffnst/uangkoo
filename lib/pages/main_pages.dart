@@ -9,16 +9,27 @@ class MainPages extends StatefulWidget {
 }
 
 class _MainPagesState extends State<MainPages> {
+  DateTime? selectedDate;
+
+  @override
+  void initState() {
+    setState(() {
+      selectedDate = DateTime.now();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CalendarAppBar(
-          accent: Colors.green,
-          backButton: false,
-          locale: 'id',
-          firstDate: DateTime.now().subtract(const Duration(days: 140)),
-          lastDate: DateTime.now(),
-          onDateChanged: () {}),
+        accent: Colors.green,
+        backButton: false,
+        locale: 'id',
+        onDateChanged: (value) => setState(() => selectedDate = value),
+        firstDate: DateTime.now().subtract(const Duration(days: 140)),
+        lastDate: DateTime.now(),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: Colors.blue,
