@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uangkoo/pages/category_pages.dart';
 import 'package:uangkoo/pages/home_pages.dart';
+import 'package:uangkoo/pages/transaction_pages.dart';
 
 class MainPages extends StatefulWidget {
   const MainPages({super.key});
@@ -56,7 +57,14 @@ class _MainPagesState extends State<MainPages> {
       floatingActionButton: Visibility(
         visible: (currentIndex == 0) ? true : false,
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context)
+                .push(
+                    MaterialPageRoute(builder: (context) => TransactionPage()))
+                .then((value) {
+              setState(() {});
+            });
+          },
           backgroundColor: Colors.blue,
           shape: const RoundedRectangleBorder(
             // <= Change BeveledRectangleBorder to RoundedRectangularBorder
