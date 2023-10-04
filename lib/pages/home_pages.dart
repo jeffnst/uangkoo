@@ -20,6 +20,11 @@ class _HomePagesState extends State<HomePages> {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                color: Colors.grey[800],
+                borderRadius: BorderRadius.circular(16)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -83,11 +88,6 @@ class _HomePagesState extends State<HomePages> {
                 ),
               ],
             ),
-            width: double.infinity,
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                color: Colors.grey[800],
-                borderRadius: BorderRadius.circular(16)),
           ),
         ),
         Padding(
