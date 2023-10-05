@@ -36,7 +36,7 @@ class _HomePagesState extends State<HomePages> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8)),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     Column(
@@ -47,7 +47,7 @@ class _HomePagesState extends State<HomePages> {
                           style: GoogleFonts.montserrat(
                               color: Colors.white, fontSize: 12),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text("Rp. 3.800.000",
@@ -65,7 +65,7 @@ class _HomePagesState extends State<HomePages> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8)),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     Column(
@@ -76,7 +76,7 @@ class _HomePagesState extends State<HomePages> {
                           style: GoogleFonts.montserrat(
                               color: Colors.white, fontSize: 12),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text("Rp. 3.800.000",

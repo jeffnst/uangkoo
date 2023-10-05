@@ -1,15 +1,17 @@
 // These imports are necessary to open the sqlite3 database
 import 'dart:io';
 
+import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:uangkoo/models/category.dart';
+import 'package:uangkoo/models/transaction.dart';
 
 // ... the TodoItems table definition stays the same
 part 'database.g.dart';
-@DriftDatabase(
-  tables: [Categories, Transaction]);
+
+@DriftDatabase(tables: [Categories, Transactions])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 

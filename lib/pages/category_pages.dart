@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uangkoo/models/category.dart';
+import 'package:uangkoo/models/database.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
@@ -10,6 +12,14 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   bool isExpense = true;
+  final AppDatabase database = AppDatabase();
+
+  Future insert(String name, int type) async {
+    await database
+        .into(database.categories)
+        .insert(Categories.insert(name: name, type: type));
+  }
+
   void openDialog() {
     showDialog(
         context: context,
