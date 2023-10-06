@@ -13,7 +13,7 @@ class MainPages extends StatefulWidget {
 }
 
 class _MainPagesState extends State<MainPages> {
-  final List<Widget> _children = [HomePages(), CategoryPage()];
+  final List<Widget> _children = [const HomePages(), const CategoryPage()];
   int currentIndex = 0;
   DateTime? selectedDate;
 
@@ -44,7 +44,7 @@ class _MainPagesState extends State<MainPages> {
               lastDate: DateTime.now(),
             )
           : PreferredSize(
-              preferredSize: Size.fromHeight(100),
+              preferredSize: const Size.fromHeight(100),
               child: Container(
                   child: Padding(
                 padding:
@@ -60,7 +60,7 @@ class _MainPagesState extends State<MainPages> {
           onPressed: () {
             Navigator.of(context)
                 .push(
-                    MaterialPageRoute(builder: (context) => TransactionPage()))
+                    MaterialPageRoute(builder: (context) => const TransactionPage()))
                 .then((value) {
               setState(() {});
             });

@@ -15,9 +15,9 @@ class _CategoryPageState extends State<CategoryPage> {
   final AppDatabase database = AppDatabase();
 
   Future insert(String name, int type) async {
-    await database
-        .into(database.categories)
-        .insert(Categories.insert(name: name, type: type));
+    DateTime now = DateTime.now();
+    await database.into(database.categories).insert(CategoriesCompanion.insert(
+        name: name, type: type, createdAt: now, updatedAt: now));
   }
 
   void openDialog() {
@@ -100,7 +100,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       Icons.download,
                       color: Colors.green,
                     ),
-              title: Text("sedekah"),
+              title: const Text("sedekah"),
               trailing: Row(mainAxisSize: MainAxisSize.min, children: [
                 IconButton(
                   onPressed: () {},
@@ -127,28 +127,28 @@ class _CategoryPageState extends State<CategoryPage> {
             elevation: 10,
             child: ListTile(
               leading: (isExpense)
-                  ? Icon(
+                  ? const Icon(
                       Icons.upload,
                       color: Colors.red,
                     )
-                  : Icon(
+                  : const Icon(
                       Icons.download,
                       color: Colors.green,
                     ),
-              title: Text("sedekah"),
+              title: const Text("sedekah"),
               trailing: Row(mainAxisSize: MainAxisSize.min, children: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.delete,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.edit,
                   ),
                 )

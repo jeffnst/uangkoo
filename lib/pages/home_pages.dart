@@ -31,10 +31,10 @@ class _HomePagesState extends State<HomePages> {
                 Row(
                   children: [
                     Container(
-                      child: Icon(Icons.download, color: Colors.green),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8)),
+                      child: const Icon(Icons.download, color: Colors.green),
                     ),
                     const SizedBox(
                       width: 15,
@@ -60,10 +60,10 @@ class _HomePagesState extends State<HomePages> {
                 Row(
                   children: [
                     Container(
-                      child: Icon(Icons.upload, color: Colors.red),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8)),
+                      child: const Icon(Icons.upload, color: Colors.red),
                     ),
                     const SizedBox(
                       width: 15,
@@ -103,7 +103,7 @@ class _HomePagesState extends State<HomePages> {
           child: Card(
             elevation: 10,
             child: ListTile(
-              trailing: Row(
+              trailing: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.delete),
@@ -113,13 +113,13 @@ class _HomePagesState extends State<HomePages> {
                   Icon(Icons.edit)
                 ],
               ),
-              title: Text("Rp.20.000"),
-              subtitle: Text("makan siang"),
+              title: const Text("Rp.20.000"),
+              subtitle: const Text("makan siang"),
               leading: Container(
-                child: Icon(Icons.upload, color: Colors.red),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8)),
+                child: const Icon(Icons.upload, color: Colors.red),
               ),
             ),
           ),
@@ -129,7 +129,7 @@ class _HomePagesState extends State<HomePages> {
           child: Card(
             elevation: 10,
             child: ListTile(
-              trailing: Row(
+              trailing: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.delete),
@@ -139,13 +139,13 @@ class _HomePagesState extends State<HomePages> {
                   Icon(Icons.edit)
                 ],
               ),
-              title: Text("Rp.20.000.000"),
-              subtitle: Text("Gaji Bulanan"),
+              title: const Text("Rp.20.000.000"),
+              subtitle: const Text("Gaji Bulanan"),
               leading: Container(
-                child: Icon(Icons.download, color: Colors.green),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8)),
+                child: const Icon(Icons.download, color: Colors.green),
               ),
             ),
           ),
