@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uangkoo/models/database.dart';
 import 'package:uangkoo/models/transaction_with_category.dart';
@@ -129,14 +130,10 @@ class _HomePagesState extends State<HomePages> {
                                   Icon(Icons.edit)
                                 ],
                               ),
-                              title: Text("Rp. " +
-                                  snapshot.data![index].transaction.amount
-                                      .toString()),
+                              title: Text(
+                                  " ${NumberFormat.simpleCurrency(locale: 'id_ID', decimalDigits: 0).format(snapshot.data![index].transaction.amount)}"),
                               subtitle: Text(
-                                  snapshot.data![index].category.name +
-                                      "(" +
-                                      snapshot.data![index].transaction.name +
-                                      ")"),
+                                  "${snapshot.data![index].category.name}(${snapshot.data![index].transaction.name})"),
                               leading: Container(
                                   decoration: BoxDecoration(
                                       color: Colors.white,
