@@ -20,6 +20,20 @@ class _TransactionPageState extends State<TransactionPage> {
   TextEditingController dateController = TextEditingController();
   TextEditingController detailController = TextEditingController();
   Category? selectedCategory;
+  Future insert(
+      int amount, DateTime date, String nameDetail, int categoryId) async {
+    DateTime now = DateTime.now();
+
+    final row = await database.into(database.transactions).insertReturning(
+        TransactionsCompanion.insert(
+            name: nameDetail,
+            category_id: categoryId,
+            transaction_date: date,
+            amount: amount,
+            createdAt: now,
+            updatedAt: now));
+    print("insert data$row");
+  }
 
   Future<List<Category>> getAllCategory(int type) async {
     return await database.getAllCategoryRepo(type);
@@ -45,7 +59,7 @@ class _TransactionPageState extends State<TransactionPage> {
                   onChanged: (bool value) {
                     setState(() {
                       isExpense = value;
-                      type = (isExpense) ? 1 : 2;
+                      type = (isExpense) ? 2 : 1;
                       selectedCategory = null;
                     });
                   },
@@ -80,15 +94,17 @@ class _TransactionPageState extends State<TransactionPage> {
               ),
             ),
             FutureBuilder<List<Category>>(
-                future: getAllCategory((isExpense == true) ? 1 : 2),
+                future: getAllCategory((isExpense == true) ? 2 : 1),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   } else {
                     if (snapshot.hasData) {
-                      if (snapshot.data!.length > 0) {
+                      if (snapshot.data!.isNotEmpty) {
+                        selectedCategory ??= snapshot.data!.first;
+
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: DropdownButton<Category>(
@@ -108,12 +124,12 @@ class _TransactionPageState extends State<TransactionPage> {
                               }),
                         );
                       } else {
-                        return Center(
+                        return const Center(
                           child: Text(" ada kosong "),
                         );
                       }
                     } else {
-                      return Center(child: Text("tidak ada data"));
+                      return const Center(child: Text("tidak ada data"));
                     }
                   }
                 }),
@@ -170,9 +186,16 @@ class _TransactionPageState extends State<TransactionPage> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  print('amount : ' + amountController.text.toString());
-                  print('date : ' + dateController.text.toString());
-                  print('detail : ' + detailController.text.toString());
+                  insert(
+                      int.parse(amountController.text),
+                      DateTime.parse(dateController.text),
+                      detailController.text,
+                      selectedCategory!.id);
+                  Navigator.pop(context, true);
+
+                  /// print('amount : ' + amountController.text.toString());
+                  // print('date : ' + dateController.text.toString());
+                  // print('detail : ' + detailController.text.toString());
                 },
                 style: ButtonStyle(
                   backgroundColor:

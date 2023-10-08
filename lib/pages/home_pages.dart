@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uangkoo/models/database.dart';
+import 'package:uangkoo/models/transaction_with_category.dart';
 
 class HomePages extends StatefulWidget {
-  const HomePages({super.key});
+  final DateTime selectedDate;
+  const HomePages({super.key, required this.selectedDate});
 
   @override
   State<HomePages> createState() => _HomePagesState();
 }
 
 class _HomePagesState extends State<HomePages> {
+  final AppDatabase database = AppDatabase();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -96,60 +100,72 @@ class _HomePagesState extends State<HomePages> {
               style: GoogleFonts.montserrat(
                   fontSize: 15, fontWeight: FontWeight.bold)),
         ),
+        StreamBuilder<List<TransactionWithCategory>>(
+            stream: database.getTransactionByDateRepo(widget.selectedDate),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                if (snapshot.hasData) {
+                  if (snapshot.data!.isNotEmpty) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Card(
+                            elevation: 10,
+                            child: ListTile(
+                              trailing: const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.delete),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Icon(Icons.edit)
+                                ],
+                              ),
+                              title: Text("Rp. " +
+                                  snapshot.data![index].transaction.amount
+                                      .toString()),
+                              subtitle: Text(
+                                  snapshot.data![index].category.name +
+                                      "(" +
+                                      snapshot.data![index].transaction.name +
+                                      ")"),
+                              leading: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child:
+                                      (snapshot.data![index].category.id == 2)
+                                          ? const Icon(Icons.upload,
+                                              color: Colors.red)
+                                          : const Icon(Icons.download,
+                                              color: Colors.green)),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return const Center(
+                      child: Text('No Data'),
+                    );
+                  }
+                } else {
+                  return const Center(
+                    child: Text("NO data"),
+                  );
+                }
+              }
+            })
 
         // list transaksi
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Card(
-            elevation: 10,
-            child: ListTile(
-              trailing: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.delete),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Icon(Icons.edit)
-                ],
-              ),
-              title: const Text("Rp.20.000"),
-              subtitle: const Text("makan siang"),
-              leading: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8)),
-                child: const Icon(Icons.upload, color: Colors.red),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Card(
-            elevation: 10,
-            child: ListTile(
-              trailing: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.delete),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Icon(Icons.edit)
-                ],
-              ),
-              title: const Text("Rp.20.000.000"),
-              subtitle: const Text("Gaji Bulanan"),
-              leading: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8)),
-                child: const Icon(Icons.download, color: Colors.green),
-              ),
-            ),
-          ),
-        )
       ],
     )));
   }

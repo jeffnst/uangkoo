@@ -1,6 +1,7 @@
 import 'package:calendar_appbar/calendar_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:uangkoo/pages/category_pages.dart';
 import 'package:uangkoo/pages/home_pages.dart';
 import 'package:uangkoo/pages/transaction_pages.dart';
@@ -13,19 +14,36 @@ class MainPages extends StatefulWidget {
 }
 
 class _MainPagesState extends State<MainPages> {
-  final List<Widget> _children = [const HomePages(), const CategoryPage()];
-  int currentIndex = 0;
-  DateTime? selectedDate;
+  late DateTime selectedDate;
+  late List<Widget> _children;
+  late int currentIndex;
 
-  void onTapTapped(int index) {
+  /* void onTapTapped(int index) {
     setState(() {
       currentIndex = index;
+    });
+  } */
+
+  void updateView(int index, DateTime? date) {
+    setState(() {
+      if (date != null) {
+        selectedDate = DateTime.parse(DateFormat('yyyy-MM-dd').format(date));
+      }
+
+      currentIndex = index;
+      _children = [
+        HomePages(
+          selectedDate: selectedDate,
+        ),
+        const CategoryPage()
+      ];
     });
   }
 
   @override
   void initState() {
     setState(() {
+      updateView(0, DateTime.now());
       selectedDate = DateTime.now();
     });
     super.initState();
@@ -36,7 +54,13 @@ class _MainPagesState extends State<MainPages> {
     return Scaffold(
       appBar: (currentIndex == 0)
           ? CalendarAppBar(
-              onDateChanged: (value) => setState(() => selectedDate = value),
+              onDateChanged: (value) {
+                setState(() {
+                  // print("selected date = " + value.toString());
+                  selectedDate = value;
+                  updateView(0, selectedDate);
+                });
+              },
               accent: Colors.green,
               backButton: false,
               locale: 'id',
@@ -59,8 +83,8 @@ class _MainPagesState extends State<MainPages> {
         child: FloatingActionButton(
           onPressed: () {
             Navigator.of(context)
-                .push(
-                    MaterialPageRoute(builder: (context) => const TransactionPage()))
+                .push(MaterialPageRoute(
+                    builder: (context) => const TransactionPage()))
                 .then((value) {
               setState(() {});
             });
@@ -97,7 +121,7 @@ class _MainPagesState extends State<MainPages> {
                 color: Colors.white,
               ),
               onPressed: () {
-                onTapTapped(0);
+                updateView(0, DateTime.now());
               },
             ),
             IconButton(
@@ -123,7 +147,7 @@ class _MainPagesState extends State<MainPages> {
                 color: Colors.white,
               ),
               onPressed: () {
-                onTapTapped(1);
+                updateView(1, null);
               },
             ),
           ],

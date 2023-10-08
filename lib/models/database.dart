@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:uangkoo/models/category.dart';
 import 'package:uangkoo/models/transaction.dart';
+import 'package:uangkoo/models/transaction_with_category.dart';
 
 // ... the TodoItems table definition stays the same
 part 'database.g.dart';
@@ -33,6 +34,22 @@ class AppDatabase extends _$AppDatabase {
 
   Future deleteCategoryRepo(int id) async {
     return (delete(categories)..where((tbl) => tbl.id.equals(id))).go();
+  }
+
+  // Transaction
+  Stream<List<TransactionWithCategory>> getTransactionByDateRepo(
+      DateTime date) {
+    final query = (select(transactions).join([
+      innerJoin(categories, categories.id.equalsExp(transactions.category_id))
+    ]))
+      ..where(transactions.transaction_date.equals(date));
+
+    return query.watch().map((rows) {
+      return rows.map((row) {
+        return TransactionWithCategory(
+            row.readTable(transactions), row.readTable(categories));
+      }).toList();
+    });
   }
 }
 
